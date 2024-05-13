@@ -10,6 +10,9 @@ import PageNotFound from './components/PageNotFound';
 import Reset from './components/Reset';
 import Recovery from './components/Recovery';
 
+//Auth middleware for navigating using token
+import { AuthorizeUser } from './helper/auth';
+
 
 // Route Routes
 const router = createBrowserRouter([
@@ -23,11 +26,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/password',
-        element: <Password></Password>
+        element: <Password/>
     },
     {
         path: '/profile',
-        element: <Profile></Profile>
+        element: <AuthorizeUser><Profile/></AuthorizeUser>
     },
     {
         path: '/reset',
