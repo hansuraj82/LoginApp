@@ -23,7 +23,7 @@ const logRequest = (req,res,next) => {
 app.use(logRequest);
 //HTTPS get request
 app.get('/',  (req,res) => {
-    res.status(200).send({"Request":"Home Get Request"});
+    res.status(200).json({"Request":"Home Get Request"});
 });
 // Routes for userRegistration
 const userRoutes = require('./Routes/userRegisterRoutes');
@@ -35,6 +35,7 @@ const generateOTP = require('./Routes/generateOtpRoute');
 const verifyOTP = require('./Routes/verifyOtpRoute');
 const createResetSession = require('./Routes/createResetSession');
 const resetPassword = require('./Routes/resetPassword')
+const registerMail = require('./Routes/registerMail');
 app.use('/api',userRoutes);
 app.use('/api',usernameVerify);
 app.use('/api',getUserRoute);
@@ -44,6 +45,7 @@ app.use('/api',generateOTP);
 app.use('/api',verifyOTP);
 app.use('/api',createResetSession);
 app.use('/api',resetPassword);
+app.use('/api',registerMail);
 
 //Starting the server
 app.listen(PORT ,()=> {

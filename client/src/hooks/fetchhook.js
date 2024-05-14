@@ -10,8 +10,9 @@ export default function useFetch(query) {
             try {
                 setData(prev => ({ ...prev, isLoading: true }));
                 const {username} = !query ? await getUsername() : '';
-                console.log("username is ",username);
+                console.log("username in fetchhool kis",username);
                 const {data, status} = !query ? await axios.get(`/api/user/${username}`) : await axios.get(`/api/${query}`);
+                console.log('status is ',status)
                 if (status === 200) {
                     setData(prev => ({ ...prev, isLoading: false }));
                     setData(prev => ({ ...prev, apiData: data, status: status }));

@@ -16,19 +16,19 @@ router.put('/updateuser',Auth,async(req,res) => {
                 runValidators: true
             })
             if(response) {
-                res.status(200).send({msg: "Record Updated Successfully....!"});
+                res.status(200).json({msg: "Record Updated Successfully....!"});
             }
             else {
-                res.status(500).send({error: "No Updation"});
+                res.status(500).json({error: "No Updation"});
             }
 
         }
         else{
-            res.status.send(404).send({error: "User Not Found"});
+            res.status.json(404).json({error: "User Not Found"});
         }
 
     } catch (error) {
-        res.status(401).send({error})
+        res.status(401).json({error})
     }
 })
 

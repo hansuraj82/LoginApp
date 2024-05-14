@@ -16,16 +16,18 @@ router.post('/authenticate', async (req, res, next) => {
         //if username doesn't exist then denied the request
         if (!usernameExist) {
             console.log("user not found")
-            return res.status(404).send({ error: "Username doesn't exist" });
+            return res.status(404).json({ error: "Username doesn't exist" });
         }
-            console.log("user exist");
-            res.status(200).send({msg: "Username exist"});
+        else
+           { console.log("user exist");
+            res.status(200).json({msg: "Username exist"});
             next();
+        }
 
 
     } catch (error) {
         console.log('error is ',error);
-        return res.status(404).send({ error: "Authentication Error" });
+        return res.status(404).json({ error: "Authentication Error" });
     }
 
 }, (req,res) => res.end());

@@ -9,14 +9,14 @@ async function verifyUser(req,res,next)  {
         //if username doesn't exist then denied the request
         if (!usernameExist) {
             console.log("user not found")
-            return res.status(404).send({ error: "Username doesn't exist" });
+            return res.status(404).json({ error: "Username doesn't exist" });
         }
             next();
 
 
     } catch (error) {
         console.log('error is ',error);
-        return res.status(404).send({ error: "Authentication Error" });
+        return res.status(404).json({ error: "Authentication Error" });
     }
 }
 

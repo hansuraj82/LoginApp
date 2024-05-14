@@ -10,7 +10,7 @@ const verifyUser = require('../controller/verifyUser');
     req.app.locals.OTP = otpGenerator.generate(6,{lowerCaseAlphabets: false,upperCaseAlphabets: false,specialChars: false});
     console.log('otp generated ',req.app.locals.OTP );
     console.log('otp is ', req.app.locals.OTP)
-    res.status(200).send({code: req.app.locals.OTP});
+    res.status(200).json({code: req.app.locals.OTP});
     next()
 }
 

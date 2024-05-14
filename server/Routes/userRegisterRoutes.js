@@ -10,13 +10,13 @@ router.post('/register', async (req, res) => {
         //check for existing username
         if (existUsername) {
             console.log("Username Exist Please Change The Username");
-            res.status(500).send({ error: "Username Exist Please Change The Username" });
+            res.status(500).json({ error: "Username Exist Please Change The Username" });
         }
         const existEmail = await userModel.findOne({ email });
         //checking for existing email
         if (existEmail) {
             console.log("Email exist Please change the email");
-            res.status(500).send({ error: "Email exist Please change the email" });
+            res.status(500).json({ error: "Email exist Please change the email" });
         }
         //generate salt for hashing the password
         const salt = await bcrypt.genSalt(10);
@@ -37,15 +37,15 @@ router.post('/register', async (req, res) => {
         console.log("user saved to the database");
         if (!response) {
             console.log("New User Not Saved........!")
-            res.status(500).send({ error: "user Not saved" });
+            res.status(500).json({ error: "user Not saved" });
         }
         console.log("User Registered successfully");
-        res.status(200).send(response);
+        res.status(200).json(response);
 
 
     } catch (error) {
         console.log(error);
-        res.status(500).send({ Error: "while saving the person", error });
+        res.status(500).json({ Error: "while saving the person", error });
     }
 })
 

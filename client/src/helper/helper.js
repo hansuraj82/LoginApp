@@ -14,8 +14,12 @@ export async function getUsername() {
 // function for regestring the user
 export async function registerUser(credentials) {
     try {
-        const { data: { msg } } = await axios.post(`/api/register`, credentials);
+        const { data: { msg },status } = await axios.post(`/api/register`, credentials);
+        let {username,email} = credentials;
         console.log("API connected successfully");
+        if(status === 200) {
+            await axios.post('/api/registerMail',{username,userEmail:email,text:msg});
+        }
         return Promise.resolve(msg);
     } catch (error) {
         console.log(error);
@@ -65,11 +69,51 @@ export async function updateUser(response) {
     }
 }
 
+//function for getuser
+export async function getUser({username}) {
+    try{
+        const {data} = await axios.get(`/api/user/${username}`);
+        return {data};
+    } catch(error) {
+        return {error: "password does not match"};
+    }
+}
+
 //function for generate otp
 export async function generateOTP(username) {
     try {
-        
+        const {data:{code},status } = await axios.get('/api/generateOTP',{params: {username}});
+        //send the mail with otp
+        if(status === 200) {
+            const {data: {email}} = await getUser({username});
+            console.log(code);
+            let text = `Your Password Recovery OTP is ${code}. verify and Recover Your Password `;
+            await axios.post(`/api/registerMail`,{username,userEmail: email,text,subject: "password Recovery Password"})
+        }
+        return Promise.resolve(code);
+
+
     } catch (error) {
-        
+        return Promise.reject({error});
+    }
+}
+
+//function for verify OTP 
+export async function verifyOTP({username,code}) {
+    try {
+        const {data, status} = await axios.get(`/api/verifyOTP`,{params: {username,code}});
+        return {data,status};
+    } catch (error) {
+        return Promise.reject({error});
+    }
+} 
+
+//function for reset Password
+export async function resetPassword({username,password}) {
+    try {
+        const {data,status} = await axios.put('/api/resetPassword',{username,password});
+        return Promise.resolve({data,status});
+    } catch (error) {
+        return Promise.reject({error});
     }
 }
