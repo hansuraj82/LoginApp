@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema({
 //Here pre is a middleware
 // userSchema.pre('save', async (next) => {
 //     const userValue = this;
-//     console.log("value stored to userValue variable");
 //     //Hash the password if the password is new or modified 
 //     // if (!(user.isModified('password'))) return next();
 //     if(!userValue.password){
@@ -49,7 +48,7 @@ const userSchema = new mongoose.Schema({
 //     try {
 //         //generate salt for hashing the password
 //         const salt = await bcrypt.genSalt(10);
-//         console.log("salt generated succesfully");
+//         // console.log("salt generated succesfully");
 //         if(!salt) {
 //             throw new Error("Salt generation failed")
 //         }
@@ -58,17 +57,17 @@ const userSchema = new mongoose.Schema({
 //         }
 //         //Hahsing the password
 //         const hashedPassword = await bcrypt.hash(this.password, salt);
-//         console.log("hashed password success")
+//         // console.log("hashed password success")
 //         //assigning the hashedPassword instead of plain text while saving the data
 //         userValue.password = hashedPassword;
-//         console.log("hashed the plain password");
+//         // console.log("hashed the plain password");
 //         next();
 //     } catch (error) {
-//         console.log("error while saving the data");
+//         // console.log("error while saving the data");
 //         return next(error);
 //     }
 
-// })
+// })  
 
 const userModel = mongoose.model('user', userSchema);
 module.exports = userModel;

@@ -8,14 +8,12 @@ async function verifyUser(req,res,next)  {
         const usernameExist = await userModel.findOne({ username });
         //if username doesn't exist then denied the request
         if (!usernameExist) {
-            console.log("user not found")
             return res.status(404).json({ error: "Username doesn't exist" });
         }
             next();
 
 
     } catch (error) {
-        console.log('error is ',error);
         return res.status(404).json({ error: "Authentication Error" });
     }
 }

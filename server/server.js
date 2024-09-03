@@ -5,6 +5,8 @@ const express = require('express')
 const cors = require('cors');
 // const morgan = require('morgan');
 const db = require('./dbConnection');
+require('dotenv').config()
+const PORT = process.env.PORT
 
 
 const app = express();
@@ -15,9 +17,8 @@ app.use(cors());
 // app.use(morgan('tiny'));
 app.disable('x-powered-by');
 
-const PORT = 3001;
+
 const logRequest = (req,res,next) => {
-    console.log(`[${new Date().toLocaleString()} Request Made to : ${req.originalUrl}]`)
     next();
 }
 app.use(logRequest);
@@ -36,6 +37,9 @@ const verifyOTP = require('./Routes/verifyOtpRoute');
 const createResetSession = require('./Routes/createResetSession');
 const resetPassword = require('./Routes/resetPassword')
 const registerMail = require('./Routes/registerMail');
+const checkemail = require('./Routes/emailExistRoute');
+
+// app.use('cors')
 app.use('/api',userRoutes);
 app.use('/api',usernameVerify);
 app.use('/api',getUserRoute);
@@ -46,6 +50,7 @@ app.use('/api',verifyOTP);
 app.use('/api',createResetSession);
 app.use('/api',resetPassword);
 app.use('/api',registerMail);
+app.use('/api',checkemail);
 
 //Starting the server
 app.listen(PORT ,()=> {

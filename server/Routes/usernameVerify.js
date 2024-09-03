@@ -7,30 +7,24 @@ router.post('/authenticate', async (req, res, next) => {
 
 
     try {
-        console.log('checking username');
-        const { username } =  req.body; //req.body contains the username for the verification
-        console.log("username is",username);
+        const { username } = req.body; //req.body contains the username for the verification
         //Check the username existence
         const usernameExist = await userModel.findOne({ username });
-        console.log("userDetails are ",usernameExist);
         //if username doesn't exist then denied the request
         if (!usernameExist) {
-            console.log("user not found")
             return res.status(404).json({ error: "Username doesn't exist" });
         }
-        else
-           { console.log("user exist");
-            res.status(200).json({msg: "Username exist"});
+        else {
+            res.status(200).json({ msg: "Username exist" });
             next();
         }
 
 
     } catch (error) {
-        console.log('error is ',error);
         return res.status(404).json({ error: "Authentication Error" });
     }
 
-}, (req,res) => res.end());
+}, (req, res) => res.end());
 
 
 module.exports = router;

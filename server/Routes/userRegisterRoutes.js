@@ -9,13 +9,11 @@ router.post('/register', async (req, res) => {
         const existUsername = await userModel.findOne({ username });
         //check for existing username
         if (existUsername) {
-            console.log("Username Exist Please Change The Username");
             res.status(500).json({ error: "Username Exist Please Change The Username" });
         }
         const existEmail = await userModel.findOne({ email });
         //checking for existing email
         if (existEmail) {
-            console.log("Email exist Please change the email");
             res.status(500).json({ error: "Email exist Please change the email" });
         }
         //generate salt for hashing the password
@@ -31,21 +29,20 @@ router.post('/register', async (req, res) => {
             profile: profile || '',
             email
         });
-        console.log('user model with the given data created and in process of saving....')
         //Saving the new user to the database
         const response = await newUser.save();
-        console.log("user saved to the database");
+
         if (!response) {
-            console.log("New User Not Saved........!")
             res.status(500).json({ error: "user Not saved" });
         }
-        console.log("User Registered successfully");
-        res.status(200).json(response);
+        else {
+            res.status(200).json(response);
+        }
+
 
 
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ Error: "while saving the person", error });
+        return res.status(500).send({ Error: "while saving the person", error });
     }
 })
 
