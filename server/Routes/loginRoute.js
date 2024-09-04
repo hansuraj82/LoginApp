@@ -17,7 +17,6 @@ router.post('/login', verifyUser, async (req, res) => {
         //checking password with database and the entered password
         else {
             const passwordCheck = await bcrypt.compare(password, usernameExist.password);
-            console.log('error yhe hai')
             if (!passwordCheck) return res.status(404).json({ error: "password doesn't match" });
             else {
                 const token = jwt.sign({ userId: usernameExist._id, username: usernameExist.username }, JWT_SECRET, { expiresIn: SESSION_TIME });
@@ -30,7 +29,6 @@ router.post('/login', verifyUser, async (req, res) => {
         }
 
     } catch (error) {
-        console.error('error yaha hai bhaiya ji',error)
         return res.status(404).json({ error })
     }
 });

@@ -13,7 +13,14 @@ const app = express();
 
 //Using middlewares
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow requests from this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow only these methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Adjust the allowed headers if necessary
+  };
+  
+//Apply the CORS middleware to your Express app
+app.use(cors(corsOptions));
 // app.use(morgan('tiny'));
 app.disable('x-powered-by');
 
