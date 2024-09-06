@@ -14,7 +14,7 @@ const app = express();
 //Using middlewares
 app.use(express.json());
 const corsOptions = {
-    origin: 'https://login-app-liart.vercel.app/', // Allow requests from this origin
+    origin: 'https://login-app-liart.vercel.app', // Allow requests from this origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow only these methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Adjust the allowed headers if necessary
   };
