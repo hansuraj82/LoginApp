@@ -7,21 +7,18 @@ import { resetPassword } from "../helper/helper";
 import { useAuthStore } from "../helper/store/store";
 import { useNavigate, Navigate } from "react-router-dom";
 import  useFetch  from '../hooks/fetchhook';
+import Loading from "./Loading";
 
 
 
 
 
 export default function Reset() {
+    document.title = "Login App - Password Reset"
     const { username } = useAuthStore(state => state.auth);
-    console.log('username in reset is ',username);
     const navigate = useNavigate();
     const [{ isLoading, apiData, status, serverError }] = useFetch('createResetSession');
     //useFormik hook to validate and get the username
-    console.log("isLoading is ",isLoading);
-    console.log("serverError ",serverError);
-    console.log('apiData is ',apiData);
-    console.log('status is reset is ',status);
     const formik = useFormik({
         initialValues: {
             password: '',
@@ -32,7 +29,6 @@ export default function Reset() {
         validateOnChange: false,
         onSubmit: async values => {
             const resetPromise = resetPassword({ username, password: values.password });
-            console.log('reset promis ',resetPromise);
             toast.promise(resetPromise, {
                 loading: "Updating Password",
                 success: <b>Password Updated Successfully</b>,
@@ -43,9 +39,9 @@ export default function Reset() {
             }
         }
     })
-    if (isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
-    if (serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
-    if (status && status !== 200) return <Navigate to={'/password'} replace={true}></Navigate>
+    if (isLoading) return <Loading/>;
+    if (serverError) return <serverError/>
+    if (status && status !== 200) return <Navigate to={'/'} replace={true}></Navigate>
 
     return (
         <>

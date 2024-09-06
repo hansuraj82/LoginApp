@@ -6,14 +6,17 @@ import { updateUser } from "../helper/helper";
 import convertToBase64 from "../helper/convert";
 import toast,{ Toaster } from "react-hot-toast";
 import '../index.css';
-import img from './user-image-dummy.png';
+import img from './userImage/user.png';
 import {useNavigate} from "react-router-dom";
+import Loading from "./Loading";
+import ServerError from "./ServerError";
 let image_url = img;
 
 
 
 
 export default function Profile() {
+    document.title = "Login App - User Profile"
     const [file, setFile] = useState();
     const [{ isLoading, apiData, serverError }] = useFetch();
     const navigate = useNavigate()
@@ -54,8 +57,8 @@ export default function Profile() {
         navigate('/');
     }
 
-    if(isLoading) return <h1 className="text-alert fs-4">isLoading</h1>
-    if(serverError) return <h1 className="text-danger fs-4">{serverError.message}</h1>
+    if(isLoading) return <Loading/>
+    if(serverError) return <ServerError/>
     return (
         <>
 
@@ -87,7 +90,7 @@ export default function Profile() {
                                     <input  {...formik.getFieldProps('email')} onChange={formik.handleChange} type="text" className=" my-2 form-control" placeholder="email*" aria-describedby="basic-addon1" />
                                 </div>
                                 <div className="col-6">
-                                    <input  {...formik.getFieldProps('mobile')} onChange={formik.handleChange} type="text" maxlength="10" className=" my-2 form-control" placeholder="Mobile No*"  aria-describedby="basic-addon1" />
+                                    <input  {...formik.getFieldProps('mobile')} onChange={formik.handleChange} type="text" maxLength="10" className=" my-2 form-control" placeholder="Mobile No*"  aria-describedby="basic-addon1" />
                                 </div>
                             </div>
                         </div>

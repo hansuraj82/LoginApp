@@ -1,7 +1,7 @@
 // import express from 'express'
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
 //FUNCTION FOR FINDING USERNAME by token
 export async function getUsername() {
@@ -11,19 +11,29 @@ export async function getUsername() {
     return decode;
 }
 
+//function for checking the exist username 
+export async function checkemail(email) {
+    
+    try {
+        const checkemailExist = await axios.post(`/api/checkemail`,{email});
+        return checkemailExist;
+    } catch (error) {
+        return error;
+    }
+}
+
 // function for regestring the user
 export async function registerUser(credentials) {
     try {
         const { data: { msg },status } = await axios.post(`/api/register`, credentials);
-        let {username,email} = credentials;
-        console.log("API connected successfully");
+        let {username,email} = credentials; 
         if(status === 200) {
             await axios.post('/api/registerMail',{username,userEmail:email,text:msg});
         }
         return Promise.resolve(msg);
     } catch (error) {
-        console.log(error);
-        return Promise.reject(error);
+        //return Promise.reject(error);
+        window.location.href = '/serverError'
     }
 }
 
@@ -34,7 +44,6 @@ export async function authenticate(username) {
         const auth = await axios.post(`/api/authenticate`, { username });
         return auth;
     } catch (error) {
-        console.log("error while authenticate", error)
         return error;
 
     }
@@ -46,15 +55,24 @@ export async function verifyPassword({ username, password }) {
 
     try {
         if (username) {
-            console.log('username in api post is ', username);
-            console.log('username in api post is ', password);
             const data = await axios.post('/api/login', { username, password });
-            console.log('data for finding token is ', data);
             return Promise.resolve(data);
         }
     } catch (error) {
-        console.log(error);
         return Promise.reject({ error: "Password does not match" });
+    }
+}
+
+//function for checking password for toast error with the status by loginRoute
+export async function verifyPassOnly(username,password) {
+    try {
+        if(username)  {
+            const data = await axios.post(`/api/login`,{username,password});
+
+            return data;
+        }
+    } catch (error) {
+        return error;
     }
 }
 //function for updating the userDetails
@@ -86,7 +104,6 @@ export async function generateOTP(username) {
         //send the mail with otp
         if(status === 200) {
             const {data: {email}} = await getUser({username});
-            console.log(code);
             let text = `Your Password Recovery OTP is ${code}. verify and Recover Your Password `;
             await axios.post(`/api/registerMail`,{username,userEmail: email,text,subject: "password Recovery Password"})
         }

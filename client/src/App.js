@@ -1,5 +1,5 @@
 import React from 'react';
-import {createBrowserRouter,RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 //Importing all the components
 import Username from './components/Username';
@@ -9,6 +9,8 @@ import Profile from './components/Profile';
 import PageNotFound from './components/PageNotFound';
 import Reset from './components/Reset';
 import Recovery from './components/Recovery';
+import ErrorBoundary from './components/ErrorBoundary';
+import ServerError from './components/ServerError';
 
 //Auth middleware for navigating using token
 import { AuthorizeUser } from './helper/auth';
@@ -18,33 +20,37 @@ import { AuthorizeUser } from './helper/auth';
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Username></Username>
+        element: <ErrorBoundary><Username/></ErrorBoundary>
     },
     {
         path: '/register',
-        element: <Register></Register>
+        element: <ErrorBoundary><Register/></ErrorBoundary>
     },
     {
         path: '/password',
-        element: <Password/>
+        element: <ErrorBoundary><Password /></ErrorBoundary> 
     },
     {
         path: '/profile',
-        element: <AuthorizeUser><Profile/></AuthorizeUser>
+        element: <ErrorBoundary><AuthorizeUser><Profile /></AuthorizeUser></ErrorBoundary>
     },
     {
         path: '/reset',
-        element: <Reset></Reset>
+        element: <ErrorBoundary><Reset/></ErrorBoundary>
     },
     {
         path: '/*',
         element: <PageNotFound></PageNotFound>
     },
+
     {
         path: '/recovery',
-        element: <Recovery/>
+        element: <ErrorBoundary><Recovery /></ErrorBoundary>
+    },
+    {
+        path: '/serverError',
+        element: <ServerError/>
     }
-
 
 
 
@@ -53,7 +59,9 @@ const router = createBrowserRouter([
 export default function App() {
     return (
         <main>
-            <RouterProvider router={router}/>
+            <ErrorBoundary>
+            <RouterProvider router={router} />
+            </ErrorBoundary>
         </main>
     )
 };

@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { usernameValidate } from "../helper/validate";
 import { Toaster } from "react-hot-toast";
 import '../index.css';
-import img from './user-image-dummy.png';
+import img from './userImage/user.png';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../helper/store/store";
 let image_url = img;
@@ -12,10 +12,10 @@ let image_url = img;
 
 
 export default function Username() {
+    document.title = "Login App - Home - Login"
     //useNavigate hook to navigate to different page after authentication
     const navigate = useNavigate();
     const setUsername = useAuthStore(state => state.setUsername);
-    console.log('setUsername id=s' ,setUsername);
 
     //useFormik hook to validate and get the username
     const formik = useFormik({

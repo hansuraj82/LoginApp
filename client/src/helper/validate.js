@@ -1,5 +1,9 @@
 import toast from 'react-hot-toast';
 import { authenticate } from './helper';
+import {checkemail} from './helper';
+import {verifyPassOnly} from './helper';
+
+
 
 // checking the username existence and navigate to password page after valid username which is in database
 export async function usernameValidate(values) {
@@ -17,8 +21,14 @@ export async function usernameValidate(values) {
     return errors;
 }
 //validate password
-export async function passwordValidate(values) {
+export async function passwordValidate(values,username) {
     const errors = passwordVerify({}, values);
+    if(values.password) {
+        const data = await verifyPassOnly(username,values.password);
+        if(data.status !== 200) {
+            errors.exist = toast.error('Password entered is incorrect!');
+        }
+    }
     return errors;
 }
 
@@ -82,6 +92,13 @@ export async function registerValidation(values) {
     const errors = usernameVerify({}, values);
     passwordVerify(errors, values);
     emailVerify(errors, values)
+    //checking the existence of email in database while registration
+    
+    const checkemailExist = await checkemail(values.email);
+    if(checkemailExist.status !==200 ) {
+        errors.exist = toast.error("Email Has Been Already used!"); 
+    }
+
     return errors
 
 }
@@ -105,6 +122,11 @@ export async function profileUpdateVerification(values) {
     emailVerify(errors, values);
     mobileVerify(errors,values);
     addressVerify(errors,values);
+    //  //checking the existence of email in database while registration
+    //  const checkemailExist = await checkemail(values.email);
+    //  if(checkemailExist.status !==200 ) {
+    //      errors.exist = toast.error("Email Has Been Already used!"); 
+    //  }
     return errors;
 
 }
@@ -146,8 +168,3 @@ function addressVerify(error = {}, values) {
         error.address = toast.error("Please Enter a Valid Adrress......!")
     }
 }
-
-
-//  export async function usernameValidate(values) {
-//     const 
-//  }

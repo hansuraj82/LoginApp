@@ -4,16 +4,20 @@ import { passwordValidate } from "../helper/validate";
 import useFetch from "../hooks/fetchhook";
 import toast,{ Toaster } from "react-hot-toast";
 import '../index.css';
-import img from './user-image-dummy.png';
-import { Link , useNavigate} from "react-router-dom";
+import img from './userImage/user.png';
+import { Link , Navigate, useNavigate} from "react-router-dom";
 import { useAuthStore } from "../helper/store/store";
-import { verifyPassword } from "../helper/helper";
+import {verifyPassword } from "../helper/helper";
+import Loading from './Loading'
+import ServerError from "./ServerError";
+
 let image_url = img;
 
 
 
 
 export default function Password() {
+    document.title = "Login App - Password";
     const {username} = useAuthStore(state => state.auth);
     const [{isLoading,apiData,serverError}] = useFetch(`user/${username}`);
     const navigate = useNavigate();
@@ -23,33 +27,33 @@ export default function Password() {
         initialValues: {
             password: '',
         },
-        validate: passwordValidate,
+        validate: values => (passwordValidate(values,username)),
         validateOnBlur: false,
         validateOnChange: false,
         onSubmit: async values => {
-            console.log('username in password ', username);
-            console.log('password in password is ', values.password)
             const loginPromise = verifyPassword({username,password: values.password});
-            console.log('loginPromise is ',loginPromise);
 
 
             toast.promise(loginPromise ,{
                 loading: 'Checking...',
                 success : <b>Login Successfully...!</b>,
-                error : <b>Password Not Match!</b>
+                error : <b>Password Not Matched!</b>
               });
               
               loginPromise.then(res => {
                 let { token } = res.data;
-                console.log('token in password.js is ',token)
                 localStorage.setItem('token', token);
                 navigate('/profile')
               })
             
         }
     })
-    if(isLoading) return <h1 className="text-alert fs-4">isLoading</h1>
-    if(serverError) return <h1 className="text-danger fs-4">{serverError.message}</h1>
+    // if(isLoading) return <h1 className="text-alert fs-4 spinner d-flex justify-content-center"></h1>
+    if(isLoading) return <Loading></Loading>
+    // if(serverError) return <h1 className="text-danger fs-4">{serverError.message}</h1>
+    if(serverError) return(
+         <><ServerError/> <Navigate to='/'></Navigate></>
+         );
     return (
         <>
             

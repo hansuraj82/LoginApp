@@ -8,6 +8,7 @@ import '../index.css';
 
 
 export default function Recovery() {
+    document.title = "Login App - Recovery"
     const { username } = useAuthStore(state => state.auth);
     const [OTP, setOTP] = useState();
     const navigate = useNavigate();

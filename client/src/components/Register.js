@@ -5,7 +5,7 @@ import { registerValidation } from "../helper/validate";
 import convertToBase64 from "../helper/convert";
 import toast,{ Toaster } from "react-hot-toast";
 import '../index.css';
-import img from './user-image-dummy.png';
+import img from './userImage/user.png';
 import { Link,useNavigate } from "react-router-dom";
 let image_url = img;
 
@@ -14,6 +14,7 @@ let image_url = img;
 
 
 export default function Register() {
+    document.title = "Login App - User Registration"
     const navigate = useNavigate();
     const [file,setFile] = useState()
 
@@ -29,7 +30,6 @@ export default function Register() {
         validateOnChange: false,
         onSubmit: async values => {
             values = Object.assign(values,{profile: file || ''})
-            // console.log(values)
             let registerPromise = registerUser(values);
             toast.promise(registerPromise,{
                 loading: 'creating....',

@@ -23,7 +23,7 @@
 }
 
 .bg-img {
-  background-image: url('components/user-image-dummy.png');
+  background-image: url('./components/userImage/user.png');
   background-size: cover;
   
 }
@@ -122,4 +122,22 @@ img {
 
 input[type="file"] {
   display: none;
+}
+
+
+/*spinner for loading*/
+.spinner {
+  height: 50px;
+  width: 50px;
+  border-top: 3px solid rgb(92, 165, 238);
+  border-radius: 50%;
+  animation: spinner 1s linear 0s infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
