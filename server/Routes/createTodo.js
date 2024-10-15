@@ -7,15 +7,11 @@ const { Auth } = require('../jwtAuth');
 
 //route for createTodo
 router.post('/todo', Auth, async (req, res) => {
-    console.log('work for creation started and it is the first')
     try {
-        console.log('work for creation started')
         //destructuring userId from jwtToken
         const { userId } = req.user;
-        console.log(userId);
         //finding all the data of the user with the help of userId
         const userData = await userModel.findById(userId);
-        console.log('user data is after finding ', userData)
         if (!userData) return res.status(404).json({ error: 'User Not Found' })
         const { title, complete, subtodos } = req.body;
         let subtodoResponses = [];
@@ -31,11 +27,6 @@ router.post('/todo', Auth, async (req, res) => {
 
             }
         }
-        console.log(subtodoResponses)
-
-
-        console.log('data in subtodos', subtodoResponses)
-        console.log(title, complete)
 
         const newTodo = new Todo({
             title,
@@ -46,12 +37,10 @@ router.post('/todo', Auth, async (req, res) => {
 
         })
         const response = await newTodo.save();
-        console.log('data saved')
         if (!response) return res.status(500).json({ errro: "No Response" })
         res.status(200).json({ msg: response })
 
     } catch (error) {
-        console.log('error in catch', error)
         res.status(500).json({ Errorincatch: error })
     }
 });
@@ -61,7 +50,6 @@ router.post('/todo', Auth, async (req, res) => {
 router.get('/todo', Auth, async (req, res) => {
     try {
         const { userId } = req.user;
-        console.log('user Id in get is', userId)
         const userExistData = await Todo.find({ createdBy: userId }).populate('subtodos');
         userExistData.reverse()
         res.status(200).json({ todo: userExistData })
@@ -76,29 +64,23 @@ router.get('/todo', Auth, async (req, res) => {
 router.delete('/todo/:id', Auth, async (req, res) => {
     try {
         const todoId = req.params.id;
-        console.log('user Id in get is', todoId)
         const todo = await Todo.findById(todoId)
-        console.log('todo is ', todo)
         const { subtodos } = todo;
-        console.log('subtodo is ', subtodos)
         if (Array.isArray(subtodos) && subtodos.length > 0) {
             for (const subtodo of subtodos) {
                 const res = await SubTodo.findByIdAndDelete(subtodo)
-                console.log('res is', res);
             }
 
         }
 
 
         const todoDelete = await Todo.findByIdAndDelete(todoId)
-        console.log('todo list found', todoDelete);
 
         if (!todoDelete) {
             res.status(404).json({ Error: "No operation Performed" })
         }
         res.status(200).json({ todoDelete })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ msg: "Server Error" })
     }
 
@@ -155,22 +137,16 @@ router.put('/todo/addSubTodo/:id', Auth, async (req, res) => {
     try {
         const id = req.params.id;
         const {subtodos} = await Todo.findById(id)
-        console.log('subtodos are from addsubtodo is ',subtodos);
 
 
         const { content } = req.body;
-        console.log('content is ',content)
         const newSubTodo = new SubTodo({
             content: content
         });
-        console.log('newSubTodo is ',newSubTodo);
         const newSubTodoResponse = await newSubTodo.save()
-        console.log('newSubTodoResponseid is ',newSubTodoResponse._id)
-        const pushdata = await subtodos.push(newSubTodoResponse._id);
-        console.log('pushdata is ',pushdata)
-        console.log('subtodos after pushing the new subtodo is ',subtodos);
+        await subtodos.push(newSubTodoResponse._id);
         const updatedSubtodoDataResponse = await Todo.findByIdAndUpdate(id,{subtodos:subtodos});
-        console.log('updatedSubtodoDataResponse is',updatedSubtodoDataResponse);
+
         
 
 
