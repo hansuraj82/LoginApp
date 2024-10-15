@@ -17,7 +17,7 @@ export default function Reset() {
     document.title = "Login App - Password Reset"
     const { username } = useAuthStore(state => state.auth);
     const navigate = useNavigate();
-    const [{ isLoading, apiData, status, serverError }] = useFetch('createResetSession');
+    const [{ isLoading, status, serverError }] = useFetch('createResetSession');
     //useFormik hook to validate and get the username
     const formik = useFormik({
         initialValues: {

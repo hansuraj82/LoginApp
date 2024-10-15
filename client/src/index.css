@@ -124,6 +124,55 @@ input[type="file"] {
   display: none;
 }
 
+.todoCardDimension {
+  min-width: 200px
+}
+.subtodoWidth {
+  max-width: 40px;
+}
+
+.sidebar {
+  z-index: 2;
+  background-color: whitesmoke;
+  min-height: 100vh;
+  width: 55vw;
+  position: absolute;
+  transition-duration: 0.5s;
+}
+.fullbar {
+  z-index: 1;
+  background-color: rgb(120, 120, 120);
+  height: 100%;
+  max-height: none;
+  width: 100vw;
+  position: absolute;
+  transition-duration: 0.2s;
+
+}
+.addSubTodo {
+  z-index: 3;
+  background-color: #fffffff0;
+  height: 40%;
+  position: absolute;
+  border-radius: 20px;
+}
+.imgInTodo {
+  border-radius: 50%;
+  height: 30px !important;
+  width: 30px;
+  object-fit: cover;
+}
+.shortProfile {
+  z-index: 4;
+  background-color: #3c8dbc;
+  height: 30%;
+  position: absolute;
+  border-bottom-left-radius: 5px;
+}
+.imageInShorProfile {
+  height: 90px !important;
+  width: 90px !important;
+}
 
 /*spinner for loading*/
 .spinner {

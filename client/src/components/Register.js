@@ -59,10 +59,11 @@ export default function Register() {
                         <p className="text-secondary">Happy to join you!</p>
                         <div className="image_space border border-success rounded-circle bg-img">
                             <label htmlFor="profile">
-                            <img src={file || image_url} className="img-fluid " alt="..."></img>
+                            <img src={file || image_url} className="img-fluid cursor-p" alt="..."></img>
                             </label>
                             <input type="file" onChange={onUpload} id="profile" name="profile" />
                         </div>
+                        <span className="fs-6 text-danger">Upload Your Image Here</span>
                         <div className="d-flex flex-column col-8  my-2">
                             <input  {...formik.getFieldProps('email')} onChange={formik.handleChange} type="text" className=" my-2 form-control" placeholder="email*"  aria-describedby="basic-addon1"/>
                             <input  {...formik.getFieldProps('username')} onChange={formik.handleChange} type="text" className=" my-2 form-control" placeholder="Username*"  aria-describedby="basic-addon1"/>

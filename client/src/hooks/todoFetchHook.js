@@ -1,17 +1,18 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { getUsername} from '../helper/helper';
+// import { getUsername} from '../helper/helper';
+// import { ShowUserTodo } from '../helper/helper';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 axios.defaults.baseURL = BACKEND_URL;
-export default function useFetch(query) {
-    const [getData, setData] = useState({ isLoading: false, apiData: '', status: null, serverError: null });
+export default function useFetch() {
+    const [getData, setData] = useState({ isLoading: false, apiData: [], status: false, serverError: false });
 
-    useEffect(() => {
+    
         const fetchData = async () => {
             try {
                 setData(prev => ({ ...prev, isLoading: true }));
-                const {username} = !query ? await getUsername() : '';
-                const {data, status} = !query ? await axios.get(`/api/user/${username}`) : await axios.get(`/api/${query}`);
+                const token = localStorage.getItem('token');
+                const {data, status} = await axios.get('api/todo',{ headers: { "Authorization": `Bearer ${token}` } })
                 if (status === 200) {
                     setData(prev => ({ ...prev, isLoading: false }));
                     setData(prev => ({ ...prev, apiData: data, status: status }));
@@ -21,8 +22,9 @@ export default function useFetch(query) {
                 setData(prev => ({ ...prev, isLoading: false, serverError: error }))
             }
         };
+        useEffect(() => {
         fetchData()
 
-    }, [query])
-    return [getData,setData];
+    }, [])
+    return [getData,fetchData];
 }

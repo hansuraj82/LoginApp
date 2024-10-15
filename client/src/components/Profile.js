@@ -4,10 +4,10 @@ import { useFormik } from 'formik';
 import { profileUpdateVerification } from "../helper/validate";
 import { updateUser } from "../helper/helper";
 import convertToBase64 from "../helper/convert";
-import toast,{ Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import '../index.css';
 import img from './userImage/user.png';
-import {useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import ServerError from "./ServerError";
 let image_url = img;
@@ -28,7 +28,7 @@ export default function Profile() {
             lastName: apiData?.lastName || '',
             email: apiData?.email || '',
             mobile: apiData?.mobile || '',
-            address: apiData?.address ||''
+            address: apiData?.address || ''
         },
         enableReinitialize: true,
         validate: profileUpdateVerification,
@@ -57,8 +57,8 @@ export default function Profile() {
         navigate('/');
     }
 
-    if(isLoading) return <Loading/>
-    if(serverError) return <ServerError/>
+    if (isLoading) return <Loading />
+    if (serverError) return <ServerError />
     return (
         <>
 
@@ -90,7 +90,7 @@ export default function Profile() {
                                     <input  {...formik.getFieldProps('email')} onChange={formik.handleChange} type="text" className=" my-2 form-control" placeholder="email*" aria-describedby="basic-addon1" />
                                 </div>
                                 <div className="col-6">
-                                    <input  {...formik.getFieldProps('mobile')} onChange={formik.handleChange} type="text" maxLength="10" className=" my-2 form-control" placeholder="Mobile No*"  aria-describedby="basic-addon1" />
+                                    <input  {...formik.getFieldProps('mobile')} onChange={formik.handleChange} type="text" maxLength="10" className=" my-2 form-control" placeholder="Mobile No*" aria-describedby="basic-addon1" />
                                 </div>
                             </div>
                         </div>
@@ -99,9 +99,13 @@ export default function Profile() {
                         </div>
                         <button className="col-11 btn btn-primary " type="submit">Update</button>
 
-                        <div className="mb-5 pb-5">
+                        <div className="">
                             <p className="text-secondary-emphasis fs-8">Already Updated? <span className="text-danger cursor-p link-underline-light" onClick={userLogout}>Log Out</span></p>
                         </div>
+                        <div className="d-flex justify-content-center align-items-center mb-4">
+                            <Link className="btn btn-success" to='/todo'>Return To Todo</Link>
+                        </div>
+
                     </div>
                 </form>
             </div>

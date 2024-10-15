@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
     theme: "default",
     product: {
         name: "LoginApp",
-        link: 'https://LoginApp.com'
+        link: 'https://login-app-liart.vercel.app/'
     }
   });
 
