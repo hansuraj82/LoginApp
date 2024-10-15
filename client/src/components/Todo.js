@@ -6,11 +6,6 @@ import { FaCheck } from "react-icons/fa";
 import {deleteTodo, formatDateAndTime} from "../helper/helper"
 import { isCompletedTodo } from '../helper/helper';
 
-
-
-
-
-
 export function Todo({ todoData , updateData , handleSubTodoAdditionFromParent , handleTitleChangeFromParent}) {
     const isComplete = todoData.complete;
     const deleteTheTodo = async(todoId)=> {
@@ -34,7 +29,6 @@ export function Todo({ todoData , updateData , handleSubTodoAdditionFromParent ,
     return (
         <>
 
-
             <div className='todoCardDimension shadow-lg my-3 mx-3 pb-3 '>
                 <div className='bg-white container d-flex justify-content-between pt-3'>
                     <div className=''>
@@ -57,10 +51,6 @@ export function Todo({ todoData , updateData , handleSubTodoAdditionFromParent ,
                         </div>
                     </div>
                     
-                    
-
-
-
                 </div>
                 <hr />
                 {

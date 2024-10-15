@@ -7,7 +7,6 @@ axios.defaults.baseURL = BACKEND_URL;
 export default function useFetch() {
     const [getData, setData] = useState({ isLoading: false, apiData: [], status: false, serverError: false });
 
-    
         const fetchData = async () => {
             try {
                 setData(prev => ({ ...prev, isLoading: true }));

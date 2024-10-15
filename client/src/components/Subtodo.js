@@ -3,9 +3,6 @@ import { MdDelete } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import { deleteSubTodo,isCompletedSubTodo } from '../helper/helper';
 
-
-
-
 export function Subtodo({subtodosData,handleSubToUpdation}) {
 //subtodo delete
 const subTodoDelete = async(subTodoId) => {
@@ -34,8 +31,6 @@ const isCompletedSubTodoOrNot = async(subTodoId,SubTodoCompletion) => {
                         <FaCheck onClick={() => {isCompletedSubTodoOrNot(subtodosData._id,subtodosData.isCompleted)}} className='fs-4'></FaCheck>
                     </div>
                 </div>
-
-
 
             </div>
         </>

@@ -11,12 +11,10 @@ import Reset from './components/Reset';
 import Recovery from './components/Recovery';
 import ErrorBoundary from './components/ErrorBoundary';
 //import ServerError from './components/ServerError';
-
 //Auth middleware for navigating using token
 import { AuthorizeUser } from './helper/auth';
 import Showtodo from './components/Showtodo';
 // import Subtodo from './components/Subtodo';
-
 
 // Route Routes
 const router = createBrowserRouter([

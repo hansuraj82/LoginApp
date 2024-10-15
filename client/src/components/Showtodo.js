@@ -21,25 +21,6 @@ export default function Showtodo() {
         setToggle(true);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // State to hold the array of input fields
     const [inputFields, setInputFields] = useState([]);
 
@@ -199,8 +180,6 @@ export default function Showtodo() {
 
 
 
-
-
     if (todoList.length !== 0) {
         return (
             <>
@@ -277,11 +256,6 @@ export default function Showtodo() {
 
                     </div>
 
-
-
-
-
-
                     <div className='row justify-content-center'>
                         <div className='addSubTodo col-lg-6 col-sm-12 ' style={{
                             top: '40%',
@@ -326,13 +300,6 @@ export default function Showtodo() {
                         </div>
 
                     </div>
-
-
-
-
-
-
-
 
                     <div className='row'>
                         <div className='' style={{
@@ -379,10 +346,6 @@ export default function Showtodo() {
                     height: toggle ? '100vh' : '',
                     overflow: toggle ? 'hidden' : ''
                 }} >
-
-
-
-
 
                     <div className='col-lg-3 col-sm-6 shortProfile' style={{
                         right: '0px',
