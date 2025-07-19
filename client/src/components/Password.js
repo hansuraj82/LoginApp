@@ -19,7 +19,7 @@ let image_url = img;
 export default function Password() {
     document.title = "Login App - Password";
     const {username} = useAuthStore(state => state.auth);
-    const [{isLoading,apiData,serverError}] = useFetch(`user/${username}`);
+    const [{isLoading,apiData,serverError}] = useFetch(`user/usernameExistence/${username}`);
     const navigate = useNavigate();
 
     //useFormik hook to validate and get the username
