@@ -10,8 +10,9 @@ router.get('/user/:username', async (req,res)=> {
         const user = await userModel.findOne({username});
         if(!user) return res.status(404).json({error:"can't find the user in the database"});
         const {password,...rest} = Object.assign({},user.toJSON())
-        return res.status(200).json(rest);
+        return res.status(200).json(`${username} exist`);
     } catch (error) {
+        console.log(error)
         return res.status(501).json({error: "can't find the user"})
     }
 })
